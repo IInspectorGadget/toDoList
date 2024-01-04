@@ -95,7 +95,7 @@ body
         appearance: none
         &:checked
             background-image: url("../assets/images/complete.svg")
-    &__select:checked + &__label
+    &__select:checked ~ &__label
         text-decoration: line-through
     &__label
         word-break: break-all
