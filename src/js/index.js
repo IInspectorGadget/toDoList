@@ -63,10 +63,14 @@ function addItem (e){
 
 //Изменяет по ключу значения в список по нажатию enter или при выходе из фокуса
 function updateItem(e, item, key, value) {
-    if ((e.keyCode === 13 || e.keyCode === undefined) && e.target.value.length > 0) {
-        item[key] = value; 
-        setItems(items);
-        refreshData();
+    if (e.keyCode === 13 || e.keyCode === undefined) {
+        if (value.trim().length > 0){
+            item[key] = value.trim(); 
+            setItems(items);
+            refreshData();
+        } else {
+            deleteItem(item.id) // если строка пустая то удаляем запись
+        }
     }
 }
 
@@ -76,6 +80,13 @@ function deleteAllItems(){
     setItems(items);
     refreshData();
 } 
+
+//Удаляет элемент из списка
+function deleteItem(id){
+    items = items.filter(el => id != el.id);
+    setItems(items);
+    refreshData();
+}
 
 //Обновляет все параметры приложения
 function refreshData () {
@@ -107,11 +118,7 @@ function refreshData () {
         if (completedInput.checked) itemsCount += 1 
 
         //Вешаем обработчик для удалений элемента списка
-        itemDelete.addEventListener("click", ()=>{
-            items = items.filter(el => item.id != el.id);
-            setItems(items);
-            refreshData();
-        })
+        itemDelete.addEventListener("click", () => deleteItem(item.id))
 
         //Вешаем обработчик для редактирования текста, через двойной клик
         taskInput.addEventListener("dblclick", ()=>{
@@ -120,7 +127,9 @@ function refreshData () {
             editInput.addEventListener("blur", e =>{
                 updateItem(e, item, "task", editInput.value);
             });
-            editInput.addEventListener("keyup",updateItem);
+            editInput.addEventListener("keyup",e =>{
+                updateItem(e, item, "task", editInput.value);
+            });
         })
 
         //Вешаем обработчик для редактирования состояния таска
