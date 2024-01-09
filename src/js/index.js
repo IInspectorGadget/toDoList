@@ -64,13 +64,20 @@ function addItem (e){
 //Изменяет по ключу значения в список по нажатию enter или при выходе из фокуса
 function updateItem(e, item, key, value) {
     if (e.keyCode === 13 || e.keyCode === undefined) {
-        if (value.trim().length > 0){
-            item[key] = value.trim(); 
+        if (typeof value == "boolean"){
+            item[key] = value;
             setItems(items);
             refreshData();
-        } else {
-            deleteItem(item.id) // если строка пустая то удаляем запись
+        }else{
+            if (value.trim().length > 0){
+                item[key] = value.trim(); 
+                setItems(items);
+                refreshData();
+            } else {
+                deleteItem(item.id) // если строка пустая то удаляем запись
+            }
         }
+        
     }
 }
 
