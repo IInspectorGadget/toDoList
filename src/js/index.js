@@ -7,12 +7,12 @@ const CLEAR_BUTTON = document.querySelector("#clear");
 const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
 //Берёт параметр фильтра из url
-function getFilterParam(){
+const getFilterParam = () =>{
     return window.location.href.substring(window.location.href.lastIndexOf('#/') + 2);
 }
 
 //Устанавливает состояние ссылок фильтра
-function setFilterLinkState(filterParam){
+const setFilterLinkState = (filterParam) => {
     for (const link of FILTER_LINK){
         if (link.getAttribute("data-type") == filterParam){
             link.classList.add("toDoApp__sort-link_select");
@@ -27,7 +27,7 @@ function setFilterLinkState(filterParam){
 }
 
 //Возвращает список отфильтрованных записей
-function itemsFilter(filterParam, items){
+const itemsFilter = (filterParam, items) => {
     if (filterParam === "active"){
         return items.filter(item => item.completed === false);
     } else if (filterParam === "completed"){ 
@@ -38,17 +38,17 @@ function itemsFilter(filterParam, items){
 }
 
 //Возвращает значение элементов списка из localstorage
-function getItems(){
+const getItems = () => {
     return JSON.parse(localStorage.getItem("itemList") || "[]");
 }
 //Сохраняет элементы списка в localstorage
-function setItems(items){
+const setItems = (items) => {
     const itemsJson = JSON.stringify(items);
     localStorage.setItem("itemList", itemsJson)
 }
 
 //Добавляет новые элементы в список по нажатию enter или при выходе из фокуса
-function addItem (e){
+const addItem = (e) => {
     if ((e.keyCode === 13 || e.keyCode === undefined) && e.target.value.trim().length > 0) {
         items.push({
             id: Math.random(),
@@ -62,7 +62,7 @@ function addItem (e){
 }
 
 //Изменяет по ключу значения в список по нажатию enter или при выходе из фокуса
-function updateItem(e, item, key, value) {
+const updateItem = (e, item, key, value) => {
     if (e.keyCode === 13 || e.keyCode === undefined) {
         if (typeof value == "boolean"){
             item[key] = value;
@@ -82,21 +82,21 @@ function updateItem(e, item, key, value) {
 }
 
 //Удаляет все данные из списка
-function deleteAllItems(){
+const deleteAllItems = () => {
     items = [];
     setItems(items);
     refreshData();
 } 
 
 //Удаляет элемент из списка
-function deleteItem(id){
+const deleteItem = (id) => {
     items = items.filter(el => id != el.id);
     setItems(items);
     refreshData();
 }
 
 //Обновляет все параметры приложения
-function refreshData () {
+const refreshData = () => {
     //Убираем содержимое представления
     LIST.innerHTML = "";
     //Обнуляем число оставшихся заданий
@@ -157,7 +157,7 @@ function refreshData () {
 }
 
 //Устанавливает значение checked для кнопки, которая меняет состояние checked всем элементам списка
-function selectAllButtonSetState(){
+const selectAllButtonSetState = () => {
     const SELECT_ALL_BUTTONState = JSON.parse(localStorage.getItem("selectAllButtonState")) || false;
     SELECT_ALL_BUTTON.checked = SELECT_ALL_BUTTONState;
 }
