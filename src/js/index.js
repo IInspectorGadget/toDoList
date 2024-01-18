@@ -144,7 +144,6 @@ const refreshData = () => {
             editInput.style.display = "block";
             editInput.focus();
             editInput.addEventListener("blur", e =>{
-                console.log(lastKeyCode)
                 if (lastKeyCode !== 27){
                     updateItem(e, item, "task", editInput.value);
                 }
