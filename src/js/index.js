@@ -148,6 +148,8 @@ const refreshData = () => {
         // Attach an event handler for editing the task state
         completedInput.addEventListener("change", e => {
             updateItem(e, item, "completed", completedInput.checked)
+            if (itemsCountLeft() !== items.length ) SELECT_ALL_BUTTON.checked = false
+            else SELECT_ALL_BUTTON.checked = true
         })
 
         // Add a new element to the view
