@@ -85,7 +85,7 @@ const updateItem = (e, item, key, value) => {
 
 
 // Delete all data from the list
-const deleteAllItems = () => {
+const deleteAllCompletedItems = () => {
     items = items.filter(el => !el.completed);
     setItems(items);
     refreshData();
