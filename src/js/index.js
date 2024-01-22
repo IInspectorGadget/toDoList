@@ -98,12 +98,15 @@ const deleteItem = (id) => {
     refreshData();
 }
 
+
+const itemsCountLeftItems = () => {
+    return items.reduce((k,cur) => k + cur.completed, 0)
+} 
+
 //Обновляет все параметры приложения
 const refreshData = () => {
     // Clear the view content
     LIST.innerHTML = "";
-    // Reset the number of remaining tasks
-    itemsCount = 0;
     // Get the filter parameter
     const filterParam = getFilterParam()
     // Filter the list
@@ -123,9 +126,6 @@ const refreshData = () => {
         taskInput.innerHTML = item.task;
         taskInput.setAttribute("data-id", item.id);
         completedInput.checked = item.completed;
-
-        // Increase the count of incomplete tasks by one
-        if (!completedInput.checked) itemsCount += 1
 
         // Attach an event handler for deleting a list item
         itemDelete.addEventListener("click", () => deleteItem(item.id))
@@ -147,11 +147,6 @@ const refreshData = () => {
 
         // Attach an event handler for editing the task state
         completedInput.addEventListener("change", e => {
-            if (completedInput.checked) {
-                itemsCount -= 1
-            } else {
-                itemsCount += 1
-            }
             updateItem(e, item, "completed", completedInput.checked)
         })
 
@@ -159,7 +154,7 @@ const refreshData = () => {
         LIST.prepend(itemElement);
     }
     // Update information about the number of remaining tasks
-    ITEMS_COUNT_VIEW.innerHTML = `${itemsCount} item left`
+    ITEMS_COUNT_VIEW.innerHTML = `${itemsCountLeftItems()} item left`
 }
 
 // Set the checked value for the button that changes the checked state for all list items
@@ -180,8 +175,6 @@ window.onhashchange = refreshData;
 
 // Get the list of items from local storage
 let items = getItems();
-// Set a variable to store the number of incomplete tasks
-let itemsCount = 0;
 // Set the checked value for the button that changes the checked state for all list items
 selectAllButtonSetState();
 // Initially set all values
