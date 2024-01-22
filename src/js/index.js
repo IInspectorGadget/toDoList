@@ -154,7 +154,7 @@ const refreshData = () => {
         LIST.prepend(itemElement);
     }
     // Update information about the number of remaining tasks
-    ITEMS_COUNT_VIEW.innerHTML = `${itemsCountLeftItems()} item left`
+    ITEMS_COUNT_VIEW.innerHTML = `${itemsCountLeft()} item left`
 }
 
 // Set the checked value for the button that changes the checked state for all list items
