@@ -99,7 +99,7 @@ const deleteItem = (id) => {
 }
 
 
-const itemsCountLeftItems = () => {
+const itemsCountLeft = () => {
     return items.reduce((k,cur) => k + cur.completed, 0)
 } 
 
