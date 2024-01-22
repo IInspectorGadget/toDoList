@@ -100,7 +100,7 @@ const deleteItem = (id) => {
 
 
 const itemsCountLeft = () => {
-    return items.reduce((k,cur) => k + cur.completed, 0)
+    return items.reduce((k,cur) => k + !cur.completed, 0)
 } 
 
 //Обновляет все параметры приложения
@@ -143,7 +143,6 @@ const refreshData = () => {
             });
 
         })
-
 
         // Attach an event handler for editing the task state
         completedInput.addEventListener("change", e => {
