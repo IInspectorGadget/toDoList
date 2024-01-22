@@ -3,7 +3,7 @@ const LIST = document.querySelector("#list");
 const LIST_ITEM = document.querySelector("#list-item-tmp");
 const SELECT_ALL_BUTTON = document.querySelector("#select-all");
 const ITEMS_COUNT_VIEW = document.querySelector("#items-count");
-const CLEAR_BUTTON = document.querySelector("#clear");
+const CLEAR_COMPLETED_ITEMS_BUTTON = document.querySelector("#clear");
 const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
 // Retrieve the filter parameter from the URL
@@ -190,4 +190,4 @@ refreshData();
 ADD_BUTTON.addEventListener("blur", addItem);
 ADD_BUTTON.addEventListener("keyup", addItem);
 // Set an event handler for the button that deletes all entries
-CLEAR_BUTTON.addEventListener("click", deleteAllCompletedItems)
+CLEAR_COMPLETED_ITEMS_BUTTON.addEventListener("click", deleteAllCompletedItems)
