@@ -12,6 +12,10 @@
     --pink-200: #AF5B5E
     --pink-footer-200: #efd5db
     --pink-footer-100: #F7EAEA
+    --green-100: #ededed
+    --green-200: #bddad5
+    --green-300: #5dc2af
+
 body
     font-size: 14px
     font-family: sans-serif
@@ -100,15 +104,34 @@ body
         position: absolute
         top: auto
         bottom: auto 
-        left: 0
+        left: 8px
 
-        width: 40px
-        height: 40px
+        width: 32px
+        height: 32px
 
-        background-image: url("../assets/images/circle.svg")
         border-radius: 50%
+        border: 1px solid var(--green-100)
         appearance: none
+        background-position: center
+
         &:checked
+            border: 1px solid var(--green-200)
+            
+        &:checked::before 
+            content: ""
+
+            position: absolute
+            left: 50%
+            top: 50%
+
+            width: 12.243px
+            height: 7.122px
+            border-bottom: 2px solid var(--green-300)
+            border-left: 2px solid var(--green-300)
+            transform: translate(calc(-50% + 0.5px),calc(-50% - 1.5px)) rotate(-45deg)
+
+
+
             background-image: url("../assets/images/complete.svg")
     &__select:checked ~ &__label
         text-decoration: line-through
