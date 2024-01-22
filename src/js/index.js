@@ -6,8 +6,9 @@ const ITEMS_COUNT_VIEW = document.querySelector("#items-count");
 const CLEAR_COMPLETED_ITEMS_BUTTON = document.querySelector("#clear");
 const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
-const setSelectButtonState = () =>{
-    !items.length - itemsCountLeft()  ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
+// Set the checked value for the button that changes the checked state for all list items
+const setSelectButtonState = () => {
+    !items.length - itemsCountLeft() ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
 }
 
 // Retrieve the filter parameter from the URL
@@ -61,7 +62,7 @@ const addItem = (e) => {
         })
         e.target.value = "",
             setItems(items);
-        
+
 
         refreshData();
         setSelectButtonState()
@@ -107,10 +108,8 @@ const deleteItem = (id) => {
 
 
 const itemsCountLeft = () => {
-    return items.reduce((k,cur) => k + !cur.completed, 0)
-} 
-
-
+    return items.reduce((k, cur) => k + !cur.completed, 0)
+}
 
 
 //Обновляет все параметры приложения
@@ -162,7 +161,7 @@ const refreshData = () => {
             updateItem(e, item, "completed", completedInput.checked)
             setSelectButtonState();
         })
-        
+
         // Add a new element to the view
         LIST.prepend(itemElement);
     }
@@ -170,10 +169,6 @@ const refreshData = () => {
     ITEMS_COUNT_VIEW.innerHTML = `${itemsCountLeft()} item left`
 }
 
-// Set the checked value for the button that changes the checked state for all list items
-const selectAllButtonSetState = () => {
-    setSelectButtonState();
-}
 
 // Change the checked value of a specific task
 SELECT_ALL_BUTTON.addEventListener("change", e => {
@@ -188,7 +183,7 @@ window.onhashchange = refreshData;
 // Get the list of items from local storage
 let items = getItems();
 // Set the checked value for the button that changes the checked state for all list items
-selectAllButtonSetState();
+setSelectButtonState();
 // Initially set all values
 refreshData();
 // Set an event handler for the button that adds entries
