@@ -190,4 +190,4 @@ refreshData();
 ADD_BUTTON.addEventListener("blur", addItem);
 ADD_BUTTON.addEventListener("keyup", addItem);
 // Set an event handler for the button that deletes all entries
-CLEAR_BUTTON.addEventListener("click", deleteAllItems)
+CLEAR_BUTTON.addEventListener("click", deleteAllCompletedItems)
