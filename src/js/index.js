@@ -8,19 +8,19 @@ const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
 // Retrieve the filter parameter from the URL
 const getFilterParam = () => {
-    return window.location.href.substring(window.location.href.lastIndexOf('#/') + 2);
+    return window.location.href.substring(window.location.href.lastIndexOf('#') + 1);
 }
 
 // Set the state of filter links
 const setFilterLinkState = (filterParam) => {
     for (const link of FILTER_LINK) {
-        if (link.getAttribute("data-type") == filterParam) {
+        if (link.getAttribute("data-type") === filterParam) {
             link.classList.add("toDoApp__sort-link_select");
             continue;
         } else {
             link.classList.remove("toDoApp__sort-link_select");
         }
-        if (!["active", "completed"].includes(filterParam) && link.getAttribute("data-type") == 'all') {
+        if (!["active", "completed"].includes(filterParam) && link.getAttribute("data-type") === 'all') {
             link.classList.add("toDoApp__sort-link_select");
         }
     }
@@ -44,8 +44,7 @@ const getItems = () => {
 
 // Save the list of items to local storage
 const setItems = (items) => {
-    const itemsJson = JSON.stringify(items);
-    localStorage.setItem("itemList", itemsJson)
+    localStorage.setItem("itemList", JSON.stringify(items))
 }
 
 // Add new items to the list on Enter key press or when focus is lost
@@ -65,7 +64,7 @@ const addItem = (e) => {
 // Update item values in the list on Enter key press or when focus is lost
 const updateItem = (e, item, key, value) => {
     if (e.keyCode === 13 || e.keyCode === undefined) {
-        if (typeof value == "boolean") {
+        if (typeof value === "boolean") {
             item[key] = value;
             setItems(items);
             refreshData();
@@ -87,14 +86,14 @@ const updateItem = (e, item, key, value) => {
 
 // Delete all data from the list
 const deleteAllItems = () => {
-    items = [];
+    items = items.filter(el => !el.completed);
     setItems(items);
     refreshData();
 }
 
 // Delete an item from the list
 const deleteItem = (id) => {
-    items = items.filter(el => id != el.id);
+    items = items.filter(el => id !== el.id);
     setItems(items);
     refreshData();
 }
@@ -126,7 +125,7 @@ const refreshData = () => {
         completedInput.checked = item.completed;
 
         // Increase the count of incomplete tasks by one
-        if (completedInput.checked) itemsCount += 1
+        if (!completedInput.checked) itemsCount += 1
 
         // Attach an event handler for deleting a list item
         itemDelete.addEventListener("click", () => deleteItem(item.id))
@@ -149,9 +148,9 @@ const refreshData = () => {
         // Attach an event handler for editing the task state
         completedInput.addEventListener("change", e => {
             if (completedInput.checked) {
-                itemsCount += 1
-            } else {
                 itemsCount -= 1
+            } else {
+                itemsCount += 1
             }
             updateItem(e, item, "completed", completedInput.checked)
         })
@@ -165,8 +164,7 @@ const refreshData = () => {
 
 // Set the checked value for the button that changes the checked state for all list items
 const selectAllButtonSetState = () => {
-    const SELECT_ALL_BUTTONState = JSON.parse(localStorage.getItem("selectAllButtonState")) || false;
-    SELECT_ALL_BUTTON.checked = SELECT_ALL_BUTTONState;
+    SELECT_ALL_BUTTON.checked = JSON.parse(localStorage.getItem("selectAllButtonState")) || false;
 }
 
 // Change the checked value of a specific task
