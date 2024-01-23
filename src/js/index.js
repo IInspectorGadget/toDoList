@@ -8,7 +8,7 @@ const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
 // Set the checked value for the button that changes the checked state for all list items
 const setSelectButtonState = () => {
-    !items.length - itemsCountLeft() ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
+    !items.length - getItemsCountLeft() ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
 }
 
 // Retrieve the filter parameter from the URL
@@ -32,7 +32,7 @@ const setFilterLinkState = (filterParam) => {
 }
 
 // Return a list of filtered items
-const itemsFilter = (filterParam, items) => {
+const getItemsFilter = (filterParam, items) => {
     if (filterParam === "active") {
         return items.filter(item => item.completed === false);
     } else if (filterParam === "completed") {
@@ -62,7 +62,6 @@ const addItem = (e) => {
         })
         e.target.value = "",
             setItems(items);
-
 
         refreshData();
         setSelectButtonState()
@@ -107,7 +106,7 @@ const deleteItem = (id) => {
 }
 
 
-const itemsCountLeft = () => {
+const getItemsCountLeft = () => {
     return items.reduce((k, cur) => k + !cur.completed, 0)
 }
 
@@ -119,7 +118,7 @@ const refreshData = () => {
     // Get the filter parameter
     const filterParam = getFilterParam()
     // Filter the list
-    const itemsFiltered = itemsFilter(filterParam, items);
+    const itemsFiltered = getItemsFilter(filterParam, items);
     // Set the filter state for links
     setFilterLinkState(filterParam)
 
@@ -166,7 +165,7 @@ const refreshData = () => {
         LIST.prepend(itemElement);
     }
     // Update information about the number of remaining tasks
-    ITEMS_COUNT_VIEW.innerHTML = `${itemsCountLeft()} item left`
+    ITEMS_COUNT_VIEW.innerHTML = `${getItemsCountLeft()} item left`
 }
 
 
