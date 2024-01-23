@@ -6,11 +6,6 @@ const ITEMS_COUNT_VIEW = document.querySelector("#items-count");
 const CLEAR_COMPLETED_ITEMS_BUTTON = document.querySelector("#clear");
 const FILTER_LINK = document.querySelectorAll("#filter > li a");
 
-// Set the checked value for the button that changes the checked state for all list items
-const setSelectButtonState = () => {
-    !items.length - getItemsCountLeft() ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
-}
-
 // Retrieve the filter parameter from the URL
 const getFilterParam = () => {
     return window.location.href.substring(window.location.href.lastIndexOf('#') + 1);
@@ -61,7 +56,7 @@ const addItem = (e) => {
             completed: false
         })
         e.target.value = "",
-            setItems(items);
+        setItems(items);
 
         refreshData();
         setSelectButtonState()
@@ -109,7 +104,6 @@ const deleteItem = (id) => {
 const getItemsCountLeft = () => {
     return items.reduce((k, cur) => k + !cur.completed, 0)
 }
-
 
 //Обновляет все параметры приложения
 const refreshData = () => {
@@ -175,6 +169,11 @@ SELECT_ALL_BUTTON.addEventListener("change", e => {
         updateItem(e, item, "completed", e.target.checked)
     }
 })
+
+// Set the checked value for the button that changes the checked state for all list items
+const setSelectButtonState = () => {
+    !items.length - getItemsCountLeft() ? SELECT_ALL_BUTTON.checked = false : SELECT_ALL_BUTTON.checked = true
+}
 
 // Track changes in the link, necessary for filtering
 window.onhashchange = refreshData;
